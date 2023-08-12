@@ -12,5 +12,6 @@ class Solution:
     
     def root(self, node):
         while self.tree[node] != node:
+            self.tree[node] = self.tree[self.tree[node]]
             node = self.tree[node]
         return node
