@@ -1,22 +1,29 @@
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        if len(s) != len(t):
-            return False
+        if len(s) != len(t): return False
         
         store = {}
+        
         for c in s:
-            try:
-                store[c] += 1
-            except KeyError:
-                store[c] = 1
+            if c not in store:
+                store[c] = 0
+            store[c] += 1
         
         for c in t:
-            try:
-                store[c] -= 1
-            except KeyError:
+            if c not in store:
                 return False
             
             if store[c] == 0:
-                del store[c]
+                return False
+            
+            if store[c] == 1:
+                del store[c] 
+                continue
+            
+            store[c] -= 1
+            
         
-        return not bool(store)
+        if len(store) > 0:
+            return False
+        
+        return True
