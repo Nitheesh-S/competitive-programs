@@ -3,27 +3,19 @@ class Solution:
         if len(s) != len(t): return False
         
         store = {}
-        
         for c in s:
-            if c not in store:
-                store[c] = 0
-            store[c] += 1
+            try:
+                store[c] += 1
+            except KeyError:
+                store[c] = 1
         
         for c in t:
-            if c not in store:
+            try:
+                store[c] -= 1
+            except KeyError:
                 return False
             
             if store[c] == 0:
-                return False
-            
-            if store[c] == 1:
-                del store[c] 
-                continue
-            
-            store[c] -= 1
-            
+                del store[c]
         
-        if len(store) > 0:
-            return False
-        
-        return True
+        return not bool(store)
